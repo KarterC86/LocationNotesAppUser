@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LocationNotesAppUser.MainNotes"
+             Title="MainNotes">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0" HorizontalOptions="Start">Notes</Label>
+
+            <Button Grid.Column="1" HorizontalOptions="End">New Note</Button>
+        </Grid>
+
+        <ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>
