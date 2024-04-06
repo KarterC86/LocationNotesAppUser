@@ -8,8 +8,8 @@
     Title="LocationNotesAppUser">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainNotest}"
+        Title=""
+        ContentTemplate="{DataTemplate local:MainNotes}"
         Route="MainPage" />
 
 </Shell>
