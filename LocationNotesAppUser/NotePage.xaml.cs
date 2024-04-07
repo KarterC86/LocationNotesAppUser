@@ -63,7 +63,7 @@ public partial class NotePage : ContentPage
 
             noteMap.IsVisible = true;
 
-            noteMap.X
+            Trace.WriteLine(noteMap.X);
 
             currentNote.loc = loc;
 
@@ -77,19 +77,21 @@ public partial class NotePage : ContentPage
 
     private void testBtn_Clicked(object sender, EventArgs e)
     {
-        // put csv code here
-
+        Trace.WriteLine("");
         var request = new NotificationRequest
         {
-            NotificationId = 1000,
+           
             Title = currentNote.name,
-            Subtitle = currentNote.desc,
-            Description = "Something",
+            Subtitle = "GeoNotes",
+            Description = currentNote.desc,
             Schedule = new NotificationRequestSchedule
+
             {
                 NotifyTime = DateTime.Now.AddSeconds(5),
-                NotifyRepeatInterval = TimeSpan.FromDays(1)
-            }
+                NotifyRepeatInterval = TimeSpan.FromMinutes(1),
+                
+            },
+            
         };
         LocalNotificationCenter.Current.Show(request);
     }
