@@ -32,17 +32,6 @@ public partial class MainNotes : ContentPage
 		Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap));
     }
 
-    private void getData()
-    {
-        // put csv code here
-
-        using (var reader = new StreamReader(""))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-        {
-            var records = csv.GetRecords<Note>();
-        }
-    }
-
     private async void main_Loaded(object sender, EventArgs e)
     {
         // create the map and set it to a variable
@@ -83,6 +72,9 @@ public partial class MainNotes : ContentPage
             {
                 Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap));
             };
+
+        }
+    }
     private void getData()
     {
         using (var reader = new StreamReader(""))
