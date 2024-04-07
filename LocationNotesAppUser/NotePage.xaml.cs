@@ -64,6 +64,6 @@ public partial class NotePage : ContentPage
 
         noteMap.IsShowingUser = true;
 
-        noteGrid.Add(noteMap, 3, 0);
+        noteGrid.Add(noteMap, 0, 3);
     }
 }
