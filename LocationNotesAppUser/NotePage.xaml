@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="LocationNotesAppUser.NotePage"
              Title="Edit Note">
     <VerticalStackLayout>
-        <Grid x:Name="noteGrid">
+        <Grid x:Name="noteGrid" Loaded="noteMap_Loaded">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
+
             <Entry x:Name="nameEntry" Grid.Row="0" Text="{Binding name}" TextChanged="nameEntry_TextChanged" FontSize="20"/>
 
             <Entry x:Name="descEntry" Grid.Row="1"  Text="{Binding desc}" TextChanged="descEntry_TextChanged"/>
@@ -18,6 +21,5 @@
             <Button x:Name="backBtn" Grid.Row="2" HorizontalOptions="Start" Text="Done" Clicked="backBtn_Clicked"/>
             <Button x:Name="deleteBtn" Grid.Row="2" Text="Delete" Clicked="deleteBtn_Clicked" HorizontalOptions="End"/>
         </Grid>
-        
     </VerticalStackLayout>
 </ContentPage>
