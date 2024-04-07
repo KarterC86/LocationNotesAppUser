@@ -8,6 +8,7 @@ using GoogleApi;
 using Microsoft.Maui.Maps;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 using Microsoft.Extensions.Options;
+using Plugin.LocalNotification;
 
 namespace LocationNotesAppUser;
 
@@ -54,21 +55,42 @@ public partial class NotePage : ContentPage
         // get current geolocation
         var loc = await Geolocation.GetLocationAsync();
 
-        MapSpan span = new MapSpan(loc, .01, .01); // sets the maps location to the user, with a small area of sight
+        if (loc != null)
+        {
+            MapSpan span = new MapSpan(loc, 1, 1); // sets the maps location to the user, with a small area of sight
 
-        Map noteMap = new Map(span);
+            Map noteMap = new Map(span);
 
-        currentNote.loc = loc;
+            noteMap.IsVisible = true;
 
-        noteMap.VerticalOptions = LayoutOptions.Fill; // makes sure the map fills the area it has
+            noteMap.X
 
-        noteMap.IsShowingUser = true;
+            currentNote.loc = loc;
 
-        noteGrid.Add(noteMap, 0, 4);
+            noteMap.VerticalOptions = LayoutOptions.Fill; // makes sure the map fills the area it has
+
+            noteMap.IsShowingUser = true;
+
+            noteGrid.Add(noteMap, 0, 4);
+        }
     }
 
     private void testBtn_Clicked(object sender, EventArgs e)
     {
         // put csv code here
+
+        var request = new NotificationRequest
+        {
+            NotificationId = 1000,
+            Title = currentNote.name,
+            Subtitle = currentNote.desc,
+            Description = "Something",
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = DateTime.Now.AddSeconds(5),
+                NotifyRepeatInterval = TimeSpan.FromDays(1)
+            }
+        };
+        LocalNotificationCenter.Current.Show(request);
     }
 }

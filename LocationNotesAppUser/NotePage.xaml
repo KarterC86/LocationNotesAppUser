@@ -4,24 +4,23 @@
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="LocationNotesAppUser.NotePage"
              Title="Edit Note">
-    <VerticalStackLayout>
-        <Grid x:Name="noteGrid" Loaded="noteGrid_Loaded">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <Grid x:Name="noteGrid" Loaded="noteGrid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
 
 
-            <Entry x:Name="nameEntry" Grid.Row="0" Text="{Binding name}" TextChanged="nameEntry_TextChanged" FontSize="20"/>
+        <Entry x:Name="nameEntry" Grid.Row="0" Text="{Binding name}" TextChanged="nameEntry_TextChanged" FontSize="20"/>
 
-            <Entry x:Name="descEntry" Grid.Row="1"  Text="{Binding desc}" TextChanged="descEntry_TextChanged"/>
+        <Entry x:Name="descEntry" Grid.Row="1"  Text="{Binding desc}" TextChanged="descEntry_TextChanged"/>
 
-            <Button x:Name="backBtn" Grid.Row="2" HorizontalOptions="Start" Text="Done" Clicked="backBtn_Clicked"/>
-            <Button x:Name="deleteBtn" Grid.Row="2" Text="Delete" Clicked="deleteBtn_Clicked" HorizontalOptions="End"/>
+        <Button x:Name="backBtn" Grid.Row="2" HorizontalOptions="Start" Text="Done" Clicked="backBtn_Clicked"/>
+        <Button x:Name="deleteBtn" Grid.Row="2" Text="Delete" Clicked="deleteBtn_Clicked" HorizontalOptions="End"/>
 
-            <Button x:Name="testBtn" Grid.Row="3" Text="Test" Clicked="testBtn_Clicked"/>
-        </Grid>
-    </VerticalStackLayout>
+        <Button x:Name="testBtn" Grid.Row="3" Text="Test" Clicked="testBtn_Clicked"/>
+    </Grid>
 </ContentPage>

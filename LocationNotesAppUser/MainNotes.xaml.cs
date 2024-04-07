@@ -1,5 +1,7 @@
+using CsvHelper;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace LocationNotesAppUser;
 
@@ -33,5 +35,11 @@ public partial class MainNotes : ContentPage
     private void getData()
     {
         // put csv code here
+
+        using (var reader = new StreamReader(""))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            var records = csv.GetRecords<Note>();
+        }
     }
 }
