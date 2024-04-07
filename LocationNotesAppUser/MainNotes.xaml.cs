@@ -29,4 +29,9 @@ public partial class MainNotes : ContentPage
             Navigation.PushAsync(new NotePage((Note) notesList.SelectedItem, allNotes));
         }
     }
+
+    private void getData()
+    {
+        // put csv code here
+    }
 }

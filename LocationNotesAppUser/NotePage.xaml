@@ -20,6 +20,8 @@
 
             <Button x:Name="backBtn" Grid.Row="2" HorizontalOptions="Start" Text="Done" Clicked="backBtn_Clicked"/>
             <Button x:Name="deleteBtn" Grid.Row="2" Text="Delete" Clicked="deleteBtn_Clicked" HorizontalOptions="End"/>
+
+            <Button x:Name="testBtn" Grid.Row="3" Text="Test" Clicked="testBtn_Clicked"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

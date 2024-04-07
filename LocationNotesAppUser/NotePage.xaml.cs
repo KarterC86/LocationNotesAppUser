@@ -64,6 +64,11 @@ public partial class NotePage : ContentPage
 
         noteMap.IsShowingUser = true;
 
-        noteGrid.Add(noteMap, 0, 3);
+        noteGrid.Add(noteMap, 0, 4);
+    }
+
+    private void testBtn_Clicked(object sender, EventArgs e)
+    {
+        // put csv code here
     }
 }
