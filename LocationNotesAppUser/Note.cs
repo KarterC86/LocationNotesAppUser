@@ -21,11 +21,15 @@ namespace LocationNotesAppUser
         {
             this.name = "New Note";
             this.desc = "Add description here!";
+
+            setLoc();
         }
 
-        public async void setLoc() // this allows the note to set its default point at the users location
+        public async Task<Location> setLoc() // this allows the note to set its default point at the users location
         {
             loc = await Geolocation.GetLocationAsync();
+
+            return loc;
         }
 
         // things for the property changed things so that the collection view gets set as it changes
