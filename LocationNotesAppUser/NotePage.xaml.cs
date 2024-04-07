@@ -10,7 +10,6 @@ using Map = Microsoft.Maui.Controls.Maps.Map; // we do these so the program does
 using Pin = Microsoft.Maui.Controls.Maps.Pin;
 using Microsoft.Extensions.Options;
 using Plugin.LocalNotification;
-using System.Diagnostics.CodeAnalysis;
 
 namespace LocationNotesAppUser;
 
@@ -22,9 +21,13 @@ public partial class NotePage : ContentPage
 
     Map noteMap { get; set; }
 
-    public NotePage(Note note, ObservableCollection<Note> allNotes, [NotNull] Map mainMap)
+    MainNotes mainP;
+
+    public NotePage(Note note, ObservableCollection<Note> allNotes, Map mainMap, MainNotes main)
 	{
         InitializeComponent();
+
+        this.mainP = main;
 
         currentNote = note;
 
@@ -57,9 +60,11 @@ public partial class NotePage : ContentPage
 
     private void backBtn_Clicked(object sender, EventArgs e)
     {
+        noteMap.MapClicked -= NoteMap_MapClicked;
+
 		Navigation.PopAsync(); // goes to the previous screen
 
-        noteMap.MapClicked -= NoteMap_MapClicked;
+        mainP.appearFunc();
     }
 
     private void descEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -69,22 +74,23 @@ public partial class NotePage : ContentPage
 
     private void deleteBtn_Clicked(object sender, EventArgs e)
     {
-        Navigation.PopAsync();
 
         noteMap.MapClicked -= NoteMap_MapClicked;
         
         notes.Remove(currentNote);
+
+        Navigation.PopAsync();
+
+        mainP.appearFunc();
     }
 
     private void noteGrid_Loaded(object sender, EventArgs e)
     {
-        Debug.WriteLine(noteMap);
         noteMap.MapClicked += NoteMap_MapClicked;
-        Debug.WriteLine(noteMap);
         
         addPin(noteMap);
 
-        noteGrid.Add(noteMap, 0, 4);
+        noteGrid.Add(noteMap, 0, 5);
     }
 
     private void NoteMap_MapClicked(object? sender, Microsoft.Maui.Controls.Maps.MapClickedEventArgs e)

@@ -19,7 +19,7 @@ namespace LocationNotesAppUser
 
         public Note()
         {
-            this.name = "New Note";
+            this.name = "New GeoNote";
             this.desc = "Add description here!";
 
             setLoc();
