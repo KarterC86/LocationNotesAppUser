@@ -58,10 +58,12 @@ public partial class NotePage : ContentPage
 
         Map noteMap = new Map(span);
 
+        currentNote.loc = loc;
+
         noteMap.VerticalOptions = LayoutOptions.Fill; // makes sure the map fills the area it has
 
         noteMap.IsShowingUser = true;
 
-
+        noteGrid.Add(noteMap, 3, 0);
     }
 }
