@@ -10,39 +10,56 @@ using Map = Microsoft.Maui.Controls.Maps.Map; // we do these so the program does
 using Pin = Microsoft.Maui.Controls.Maps.Pin;
 using Microsoft.Extensions.Options;
 using Plugin.LocalNotification;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LocationNotesAppUser;
 
 public partial class NotePage : ContentPage
 {
 	Note currentNote { get; set; }
+
     ObservableCollection<Note> notes { get; set; }
 
     Map noteMap { get; set; }
 
-    public NotePage(Note note, ObservableCollection<Note> notes, Map noteMap)
+    public NotePage(Note note, ObservableCollection<Note> allNotes, [NotNull] Map mainMap)
 	{
-		InitializeComponent();
+        InitializeComponent();
 
-		currentNote = note;
+        currentNote = note;
 
-		noteGrid.BindingContext = currentNote;
+        noteGrid.BindingContext = currentNote;
 
-        this.notes = notes;
+        this.notes = allNotes;
 
-        this.noteMap = noteMap;
-	}
+        // Add null check before assigning
+        if (mainMap != null)
+        {
+            this.noteMap = mainMap;
+            // Ensure event subscription here if necessary
+            noteMap.MapClicked += NoteMap_MapClicked;
+        }
+        else
+        {
+            // Handle the case where mainMap is null
+            // Log an error, throw an exception, or handle it gracefully as per your requirement.
+            // For now, we just log an error.
+            Debug.WriteLine("mainMap is null in NotePage constructor.");
+        }
+    }
 
     private void nameEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
 		currentNote.Name = nameEntry.Text; // sets the name of the currentNote to the name entry
 
-        addPin(); 
+        addPin(noteMap); 
     }
 
     private void backBtn_Clicked(object sender, EventArgs e)
     {
 		Navigation.PopAsync(); // goes to the previous screen
+
+        noteMap.MapClicked -= NoteMap_MapClicked;
     }
 
     private void descEntry_TextChanged(object sender, TextChangedEventArgs e)
@@ -53,13 +70,19 @@ public partial class NotePage : ContentPage
     private void deleteBtn_Clicked(object sender, EventArgs e)
     {
         Navigation.PopAsync();
+
+        noteMap.MapClicked -= NoteMap_MapClicked;
         
         notes.Remove(currentNote);
     }
 
-    private async void noteGrid_Loaded(object sender, EventArgs e)
+    private void noteGrid_Loaded(object sender, EventArgs e)
     {
-        addPin();
+        Debug.WriteLine(noteMap);
+        noteMap.MapClicked += NoteMap_MapClicked;
+        Debug.WriteLine(noteMap);
+        
+        addPin(noteMap);
 
         noteGrid.Add(noteMap, 0, 4);
     }
@@ -68,24 +91,33 @@ public partial class NotePage : ContentPage
     {
         currentNote.loc = e.Location;
 
-        addPin();
+        addPin(noteMap);
     }
 
-    private void addPin()
+    private async void addPin(Map map)
     {
-        if (noteMap != null)
+        if (noteMap != null && map != null)
         {
-            noteMap.Pins.Clear();
+            map.Pins.Clear();
 
             var pin = new Pin();
+
+            if (currentNote.loc == null)
+            {
+                await currentNote.setLoc();
+            }
 
             pin.Location = currentNote.loc;
 
             pin.Label = currentNote.name;
 
-            noteMap.Pins.Add(pin);
-
+            map.Pins.Add(pin);
         }
+        else
+        {
+            Debug.WriteLine("Map was null");
+        }
+
     }
 
     private void testBtn_Clicked(object sender, EventArgs e)
