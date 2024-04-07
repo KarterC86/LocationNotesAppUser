@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
-             x:Class="LocationNotesAppUser.MainNotes"
-             Loaded="main_Loaded">
+             x:Class="LocationNotesAppUser.MainNotes">
     <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -17,6 +16,6 @@
         
         <Label Grid.Column="0" Text="GeoNotes" HorizontalOptions="Start" FontSize="Title" FontAttributes="Bold"/>
 
-        <Button Grid.Column="1" x:Name="newNoteBtn" HorizontalOptions="End" Text="New Note" Clicked="newNoteBtn_Clicked"/>
+        <Button Grid.Column="1" x:Name="newNoteBtn" HorizontalOptions="End" Text="New GeoNote" Clicked="newNoteBtn_Clicked"/>
     </Grid>
 </ContentPage>

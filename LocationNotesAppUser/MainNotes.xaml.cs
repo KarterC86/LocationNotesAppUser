@@ -29,17 +29,11 @@ public partial class MainNotes : ContentPage
 		allNotes.Add(new());
 
 		// pull up the notepage where they can add things to the new note
-		Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap));
+		Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap, this));
     }
 
-    private async void main_Loaded(object sender, EventArgs e)
+    protected override async void OnAppearing() // when it first loads
     {
-        // create the map and set it to a variable
-        if (mainGrid.Contains(mainMap))
-        {
-            mainGrid.Remove(mainMap);
-        }
-
         var loc = await Geolocation.GetLocationAsync();
 
         var span = new MapSpan(loc, loc.Latitude + 1, loc.Longitude + 1);
@@ -51,6 +45,19 @@ public partial class MainNotes : ContentPage
         mainMap.IsShowingUser = true;
 
         mainMap.VerticalOptions = LayoutOptions.Fill;
+
+        appearFunc();
+
+        base.OnAppearing();
+    }
+
+    public void appearFunc() 
+    {
+        // create the map and set it to a variable
+        if (mainGrid.Children.Contains(mainMap))
+        {
+            mainGrid.Children.Remove(mainMap);
+        }
 
         mainGrid.AddWithSpan(mainMap, 1, 0, 1, 2);
 
@@ -65,14 +72,17 @@ public partial class MainNotes : ContentPage
         {
             var pin = new Pin();
 
+            // sets the pins label and location
             pin.Label = note.name;
             pin.Location = note.loc;
 
+            // whenever the user clicks the pin, it takes them to its edit page
             pin.MarkerClicked += (object? sender, PinClickedEventArgs e) =>
             {
-                Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap));
+                Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap, this));
             };
 
+            mainMap.Pins.Add(pin); // adds the pin to the map
         }
     }
     private void getData()
