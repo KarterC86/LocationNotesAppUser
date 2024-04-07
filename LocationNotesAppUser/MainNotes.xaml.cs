@@ -1,15 +1,17 @@
 using CsvHelper;
+using CsvHelper.Configuration.Attributes;
 using Microsoft.Maui.Maps;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using Map = Microsoft.Maui.Controls.Maps.Map;
+using CsvHelper.Configuration;
 
 namespace LocationNotesAppUser;
 
 public partial class MainNotes : ContentPage
 {
-    ObservableCollection<Note> allNotes = [];
+    ObservableCollection<Note> allNotes = [new Note()];
 
     Map mainMap { get; set; }
 
@@ -45,6 +47,7 @@ public partial class MainNotes : ContentPage
 
 		// pull up the notepage where they can add things to the new note
 		Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap));
+        SaveNotes (); 
     }
 
     private void notesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -57,12 +60,27 @@ public partial class MainNotes : ContentPage
 
     private void getData()
     {
-        // put csv code here
-
         using (var reader = new StreamReader(""))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             var records = csv.GetRecords<Note>();
         }
+
+    }
+
+    private void SaveNotes()
+    {
+        using var writer = new StreamWriter("notes.csv");
+        using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+
+        csv.WriteHeader<notemap>();
+        csv.NextRecord();
+        foreach (var Note in allNotes)
+        {
+             csv.WriteRecord(Note);
+             csv.NextRecord();
+        }
+
+        csv.Flush();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -39,5 +40,19 @@ namespace LocationNotesAppUser
         // use these variable to get the values
         public String Name { get { return this.name; } set {  this.name = value; NotifyPropertyChanged();  } }
         public String Desc { get { return this.desc; } set {  this.desc = value; NotifyPropertyChanged();  } }
+
+    }
+    
+    public class notemap : ClassMap<Note> 
+    {
+        public notemap()
+        {
+
+            Map(n => n.name).Name("Name");
+            Map(n => n.desc).Name("discription");
+            Map(n => n.loc.Latitude).Name("lat");
+            Map(n => n.loc.Longitude).Name("long");
+            
+        }
     }
 }

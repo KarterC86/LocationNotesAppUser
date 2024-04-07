@@ -87,25 +87,21 @@ public partial class NotePage : ContentPage
 
         }
     }
-
     private void testBtn_Clicked(object sender, EventArgs e)
     {
-        Trace.WriteLine("");
         var request = new NotificationRequest
         {
-           
+            NotificationId = 4,
             Title = currentNote.name,
             Subtitle = "GeoNotes",
             Description = currentNote.desc,
-            Schedule = new NotificationRequestSchedule
+            BadgeNumber = 4,
 
+            Schedule = new NotificationRequestSchedule
             {
-                NotifyTime = DateTime.Now.AddSeconds(5),
-                NotifyRepeatInterval = TimeSpan.FromMinutes(1),
-                
-            },
-            
+                NotifyTime = DateTime.Now.AddSeconds(3),
+            }
         };
-        LocalNotificationCenter.Current.Show(request);
+                LocalNotificationCenter.Current.Show(request);
     }
 }
