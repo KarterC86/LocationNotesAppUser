@@ -26,10 +26,13 @@ public partial class MainNotes : ContentPage
 
     private void newNoteBtn_Clicked(object sender, EventArgs e)
     {
-		allNotes.Add(new());
+        if (mainMap != null)
+        {
+		    allNotes.Add(new());
 
-		// pull up the notepage where they can add things to the new note
-		Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap, this));
+		    // pull up the notepage where they can add things to the new note
+		    Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap, this));
+        }
     }
 
     protected override async void OnAppearing() // when it first loads

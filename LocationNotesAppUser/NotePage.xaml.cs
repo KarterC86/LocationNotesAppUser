@@ -104,8 +104,6 @@ public partial class NotePage : ContentPage
     {
         if (noteMap != null && map != null)
         {
-            map.Pins.Clear();
-
             var pin = new Pin();
 
             if (currentNote.loc == null)
@@ -117,7 +115,7 @@ public partial class NotePage : ContentPage
 
             pin.Label = currentNote.name;
 
-            map.Pins.Add(pin);
+            map.ItemsSource = new ObservableCollection<Pin> { pin };
         }
         else
         {
