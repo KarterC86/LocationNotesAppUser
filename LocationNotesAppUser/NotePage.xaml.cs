@@ -49,7 +49,7 @@ public partial class NotePage : ContentPage
         notes.Remove(currentNote);
     }
 
-    private async void noteGrid_Loaded(object sender, EventArgs e)
+    private async void noteMap_Loaded(object sender, EventArgs e)
     {
         // get current geolocation
         var loc = await Geolocation.GetLocationAsync();

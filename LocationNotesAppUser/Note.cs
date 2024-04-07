@@ -14,6 +14,8 @@ namespace LocationNotesAppUser
 
         public String desc { get; set; }
 
+        public Location loc { get; set; }
+
         public Note()
         {
             this.name = "New Note";
