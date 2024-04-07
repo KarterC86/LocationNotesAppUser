@@ -89,7 +89,7 @@ public partial class NotePage : ContentPage
         
         addPin(noteMap);
 
-        noteGrid.Add(noteMap, 0, 5);
+        noteGrid.Add(noteMap, 0, 4);
     }
 
     private void NoteMap_MapClicked(object? sender, Microsoft.Maui.Controls.Maps.MapClickedEventArgs e)
@@ -103,6 +103,8 @@ public partial class NotePage : ContentPage
     {
         if (noteMap != null && map != null)
         {
+            map.Pins.Clear();
+
             var pin = new Pin();
 
             if (currentNote.loc == null)
@@ -114,29 +116,11 @@ public partial class NotePage : ContentPage
 
             pin.Label = currentNote.name;
 
-            map.ItemsSource = new ObservableCollection<Pin> { pin };
+            map.Pins.Add(pin);
         }
         else
         {
             Debug.WriteLine("Map was null");
         }
-
-    }
-    private void testBtn_Clicked(object sender, EventArgs e)
-    {
-        var request = new NotificationRequest
-        {
-            NotificationId = 4,
-            Title = currentNote.name,
-            Subtitle = "GeoNotes",
-            Description = currentNote.desc,
-            Schedule = new NotificationRequestSchedule
-            {
-                NotifyTime = DateTime.Now.AddSeconds(3),
-                NotifyRepeatInterval = TimeSpan.FromDays(1),
-            }
-        };
-        
-        LocalNotificationCenter.Current.Show(request);
     }
 }

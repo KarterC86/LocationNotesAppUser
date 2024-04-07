@@ -17,6 +17,10 @@ namespace LocationNotesAppUser
 
         public Location? loc { get; set; }
 
+        public bool notified = false;
+
+        public double distance = 1; // in miles
+
         public Note()
         {
             this.name = "New GeoNote";

@@ -9,7 +9,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
@@ -21,7 +20,5 @@
 
         <Button x:Name="backBtn" Grid.Row="3" HorizontalOptions="Start" Text="Done" Clicked="backBtn_Clicked"/>
         <Button x:Name="deleteBtn" Grid.Row="3" Text="Delete" Clicked="deleteBtn_Clicked" HorizontalOptions="End"/>
-
-        <Button x:Name="testBtn" Grid.Row="4" Text="show notification" Clicked="testBtn_Clicked"/>
     </Grid>
 </ContentPage>

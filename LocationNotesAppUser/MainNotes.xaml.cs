@@ -71,6 +71,8 @@ public partial class MainNotes : ContentPage
     {
         ObservableCollection<Pin> pins = new();
 
+        mainMap.Pins.Clear();
+
         foreach (Note note in allNotes)
         {
             var pin = new Pin();
@@ -85,10 +87,8 @@ public partial class MainNotes : ContentPage
                 Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap, this));
             };
 
-            pins.Add(pin); // adds the pin to the map
+            mainMap.Pins.Add(pin); // adds the pin to the map
         }
-
-        mainMap.ItemsSource = pins;
     }
     private void getData()
     {

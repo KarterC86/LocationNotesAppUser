@@ -19,6 +19,7 @@ namespace LocationNotesAppUser
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddHostedService<LocationListener>();
 
             return builder.Build();
         }
