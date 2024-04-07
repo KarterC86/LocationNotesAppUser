@@ -20,6 +20,7 @@ namespace LocationNotesAppUser
         {
             this.name = "New Note";
             this.desc = "Add description here!";
+            loc = null;
         }
 
         // things for the property changed things so that the collection view gets set as it changes
