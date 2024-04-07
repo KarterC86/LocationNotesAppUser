@@ -59,14 +59,14 @@ public partial class MainNotes : ContentPage
             mainGrid.Children.Remove(mainMap);
         }
 
-        mainGrid.AddWithSpan(mainMap, 1, 0, 1, 2);
-
         resetPins();
+
+        mainGrid.AddWithSpan(mainMap, 1, 0, 1, 2);
     }
 
     public void resetPins()
     {
-        mainMap.Pins.Clear();
+        ObservableCollection<Pin> pins = new();
 
         foreach (Note note in allNotes)
         {
@@ -82,8 +82,10 @@ public partial class MainNotes : ContentPage
                 Navigation.PushAsync(new NotePage(allNotes.Last(), allNotes, mainMap, this));
             };
 
-            mainMap.Pins.Add(pin); // adds the pin to the map
+            pins.Add(pin); // adds the pin to the map
         }
+
+        mainMap.ItemsSource = pins;
     }
     private void getData()
     {
