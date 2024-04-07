@@ -12,7 +12,6 @@ using Microsoft.Extensions.Options;
 using Plugin.LocalNotification;
 
 namespace LocationNotesAppUser;
-
 public partial class NotePage : ContentPage
 {
 	Note currentNote { get; set; }
