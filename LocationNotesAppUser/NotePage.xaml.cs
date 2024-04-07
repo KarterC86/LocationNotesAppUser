@@ -6,7 +6,8 @@ using GoogleApi.Entities.Maps.StaticMaps.Request;
 using GoogleApi.Entities.Maps.StaticMaps.Response;
 using GoogleApi;
 using Microsoft.Maui.Maps;
-using Map = Microsoft.Maui.Controls.Maps.Map;
+using Map = Microsoft.Maui.Controls.Maps.Map; // we do these so the program doesnt get it from other places
+using Pin = Microsoft.Maui.Controls.Maps.Pin;
 using Microsoft.Extensions.Options;
 using Plugin.LocalNotification;
 
@@ -57,13 +58,15 @@ public partial class NotePage : ContentPage
 
         if (loc != null)
         {
-            MapSpan span = new MapSpan(loc, 1, 1); // sets the maps location to the user, with a small area of sight
+            MapSpan span = new MapSpan(loc, .01, .01); // sets the maps location to the user, with a small area of sight
 
             Map noteMap = new Map(span);
 
+            noteMap.MapClicked += NoteMap_MapClicked;
+
             noteMap.IsVisible = true;
 
-            noteMap.X
+            Trace.WriteLine(noteMap.X);
 
             currentNote.loc = loc;
 
@@ -71,8 +74,29 @@ public partial class NotePage : ContentPage
 
             noteMap.IsShowingUser = true;
 
+            var pin = new Pin();
+
+            pin.Location = currentNote.loc;
+
+            noteMap.Pins.Add(pin);
+
             noteGrid.Add(noteMap, 0, 4);
         }
+    }
+
+    private void NoteMap_MapClicked(object? sender, Microsoft.Maui.Controls.Maps.MapClickedEventArgs e)
+    {
+        currentNote.loc = e.Location;
+
+        var map = (Map)sender;
+
+        map.Pins.Clear();
+
+        var pin = new Pin();
+
+        pin.Location = currentNote.loc;
+
+        map.Pins.Add(pin);
     }
 
     private void testBtn_Clicked(object sender, EventArgs e)
