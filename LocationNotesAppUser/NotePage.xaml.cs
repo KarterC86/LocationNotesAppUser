@@ -130,13 +130,13 @@ public partial class NotePage : ContentPage
             Title = currentNote.name,
             Subtitle = "GeoNotes",
             Description = currentNote.desc,
-            BadgeNumber = 4,
-
             Schedule = new NotificationRequestSchedule
             {
                 NotifyTime = DateTime.Now.AddSeconds(3),
+                NotifyRepeatInterval = TimeSpan.FromDays(1),
             }
         };
-                LocalNotificationCenter.Current.Show(request);
+        
+        LocalNotificationCenter.Current.Show(request);
     }
 }
