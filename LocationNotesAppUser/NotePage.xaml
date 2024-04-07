@@ -5,7 +5,7 @@
              x:Class="LocationNotesAppUser.NotePage"
              Title="Edit Note">
     <VerticalStackLayout>
-        <Grid x:Name="noteGrid" Loaded="noteMap_Loaded">
+        <Grid x:Name="noteGrid" Loaded="noteGrid_Loaded">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
