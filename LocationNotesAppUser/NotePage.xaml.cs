@@ -18,7 +18,9 @@ public partial class NotePage : ContentPage
 	Note currentNote { get; set; }
     ObservableCollection<Note> notes { get; set; }
 
-    public NotePage(Note note, ObservableCollection<Note> notes)
+    Map noteMap { get; set; }
+
+    public NotePage(Note note, ObservableCollection<Note> notes, Map noteMap)
 	{
 		InitializeComponent();
 
@@ -27,11 +29,15 @@ public partial class NotePage : ContentPage
 		noteGrid.BindingContext = currentNote;
 
         this.notes = notes;
+
+        this.noteMap = noteMap;
 	}
 
     private void nameEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
 		currentNote.Name = nameEntry.Text; // sets the name of the currentNote to the name entry
+
+        addPin(); 
     }
 
     private void backBtn_Clicked(object sender, EventArgs e)
@@ -53,50 +59,33 @@ public partial class NotePage : ContentPage
 
     private async void noteGrid_Loaded(object sender, EventArgs e)
     {
-        // get current geolocation
-        var loc = await Geolocation.GetLocationAsync();
+        addPin();
 
-        if (loc != null)
-        {
-            MapSpan span = new MapSpan(loc, .01, .01); // sets the maps location to the user, with a small area of sight
-
-            Map noteMap = new Map(span);
-
-            noteMap.MapClicked += NoteMap_MapClicked;
-
-            noteMap.IsVisible = true;
-
-            Trace.WriteLine(noteMap.X);
-
-            currentNote.loc = loc;
-
-            noteMap.VerticalOptions = LayoutOptions.Fill; // makes sure the map fills the area it has
-
-            noteMap.IsShowingUser = true;
-
-            var pin = new Pin();
-
-            pin.Location = currentNote.loc;
-
-            noteMap.Pins.Add(pin);
-
-            noteGrid.Add(noteMap, 0, 4);
-        }
+        noteGrid.Add(noteMap, 0, 4);
     }
 
     private void NoteMap_MapClicked(object? sender, Microsoft.Maui.Controls.Maps.MapClickedEventArgs e)
     {
         currentNote.loc = e.Location;
 
-        var map = (Map)sender;
+        addPin();
+    }
 
-        map.Pins.Clear();
+    private void addPin()
+    {
+        if (noteMap != null)
+        {
+            noteMap.Pins.Clear();
 
-        var pin = new Pin();
+            var pin = new Pin();
 
-        pin.Location = currentNote.loc;
+            pin.Location = currentNote.loc;
 
-        map.Pins.Add(pin);
+            pin.Label = currentNote.name;
+
+            noteMap.Pins.Add(pin);
+
+        }
     }
 
     private void testBtn_Clicked(object sender, EventArgs e)
